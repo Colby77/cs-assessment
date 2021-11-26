@@ -1,0 +1,22 @@
+Results
+                            insert      append
+extraLargeArray(100,000)    1.029 s     3.681 ms
+largeArray(10,000)          10.633 ms   771.8 μs
+mediumArray(1,000)          238.2 μs    189.3 μs   
+smallArray(100)             66.9 μs     130.5 μs
+tinyArray(10)               51.3 μs     116.6 μs
+
+    The doublerInsert() is faster than doublerAppend() until about 1,000 numbers
+are passed into the functions, then doublerAppend() is much faster.  I think that
+doublerAppend() scales a lot better than doublerInsert() in the long run.  Insert() 
+is about twice as fast as append in this case while 100-ish or less numbers are
+passed but it takes Insert() 171 μs longer to do 1,000 numbers while Append()'s 
+time only increases 59 μs. And as you can see Append()'s times from that point on show
+it to scale better. By the end, Append() is 279 times faster only taking 3.6 ms 
+while Insert() takes a whole second, which is a lot compared to ms, 3.681 ms = 0.003681 s. 
+
+    The reason doublerInsert() is so much slower in the long run is because it uses .unshift().
+Unshift() adds an item to the beginning of an array and then moves each item in the array up an
+index, which is an O(n) time complexity vs .push() in doublerAppend() just adds an item to the end
+of the array in one action.  The time for .unshift() increases as the list increases because
+there are more items that it has to move up an index.
